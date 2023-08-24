@@ -50,7 +50,7 @@ try {
             
             foreach ($device in $devicesToDelete) {
                 try {
-                    Remove-ActiveSyncDevice -Identity $($device.DeviceI) -Confirm:$false
+                    Remove-ActiveSyncDevice -Identity $($device.DeviceId) -Confirm:$false
 
                     Write-Information "Finished deleting $($device.DeviceId) for user [$username]"
                     $Log = @{
