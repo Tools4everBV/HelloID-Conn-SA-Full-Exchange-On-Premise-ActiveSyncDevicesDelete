@@ -21,7 +21,7 @@ try {
     Write-Information "SearchQuery: $($ParamsGetMailbxox.Filter)"
         $devices = Invoke-Command -Session $exchangeSession -ScriptBlock {
             Param ($ParamsGetMailbxox)
-            Get-MobileDevice @ParamsGetMailbxox | Select-Object FriendlyName,UserDisplayName,DeviceFriendlyName,DevicePhoneNumber,DeviceId,DeviceOS,DeviceType,DeviceUserAgent,DeviceModel,DistinguishedName,FirstSyncTime,DeviceAccessState,DeviceAccessStateReason,DeviceAccessControlRule,ClientType
+            Get-MobileDevice @ParamsGetMailbxox | Select-Object Identity,FriendlyName,UserDisplayName,DeviceFriendlyName,DevicePhoneNumber,DeviceId,DeviceOS,DeviceType,DeviceUserAgent,DeviceModel,DistinguishedName,FirstSyncTime,DeviceAccessState,DeviceAccessStateReason,DeviceAccessControlRule,ClientType
         } -ArgumentList $ParamsGetMailbxox
 
     
@@ -32,7 +32,7 @@ try {
         if ($resultCount -gt 0) {
             foreach ($device in $devices) {
                 
-                    $returnObject = @{DeviceId = $device.DeviceId; FriendlyName = $device.FriendlyName; DeviceType = $device.DeviceType; DeviceModel=$device.DeviceModel; State=$device.DeviceAccessState.Value }
+                    $returnObject = @{DeviceId = $device.Identity.ObjectGuid; FriendlyName = $device.FriendlyName; DeviceType = $device.DeviceType; DeviceModel=$device.DeviceModel; State=$device.DeviceAccessState.Value }
                     Write-Output $returnObject
                 
             }
